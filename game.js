@@ -1,13 +1,16 @@
+let playersScore = 0;
+let computersScore = 0;
+
 //make a computer function that returns paper,rock, or scissors
 
 function computerPlay() {
    let computerPlay = Math.random();
    if (computerPlay < 0.33) {
-       computerSelection = 'Rock';
+       computerSelection = 'rock';
    } else if (computerPlay <= 0.67) {
-       computerSelection = 'Paper'
+       computerSelection = 'paper'
    } else {
-        computerSelection = 'Scissors'
+        computerSelection = 'scissors'
    }
    return computerSelection;
 }
@@ -35,10 +38,21 @@ function playRound(playerSelection, computerSelection) {
 //create player's and computer's score starting from 0 and increment their scores 
 //accordingly
 
-let playersScore = 0;
-let computersScore = 0;
-
-
+function score(playerSelection, computerSelection) {
+    if (playerSelection === 'rock' && computerSelection === 'paper') {
+        computersScore++
+    } else if (playerSelection === 'paper' && computerSelection == 'scisssors') {
+        computersScore++
+    } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
+        computersScore++
+    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
+        playersScore++
+    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
+        playersScore++
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+        playersScore++
+    }
+}
 
 //create a fuction called game and call the playRound function inside of it to play a 
 //5 round game that keeps score and reports a winner of loser at the end.
@@ -46,9 +60,23 @@ function game() {
     for (let i = 0; i < 5; i++) {
         let playerSelection = prompt("Rock, Paper, or Scissors?");
         const computerSelection = computerPlay();
+        playRound(playerSelection, computerSelection);
+        score(playerSelection, computerSelection);
         console.log(playRound(playerSelection, computerSelection));
         console.log("Your score = " + playersScore);
-        console.log("Computer's score = " + computersScore)
+        console.log("Computer's score = " + computersScore);
+
+        if (playersScore > computersScore && i == 4) {
+            console.log("Game Over");
+            console.log("You won the game!");
+        } else if (playersScore < computersScore && i == 4) {
+            console.log("Game Over");
+            console.log("You lost the game!");
+        } else if (playersScore == computersScore && i == 4) {
+            console.log("Game Over");
+            console.log("it's a tie game!");
+        }
     }
 }
 
+game();
